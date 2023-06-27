@@ -1,7 +1,7 @@
 # one can update to the latest dex by running this python script
 import requests
 import json
-
+from pathlib import Path
 
 from bs4 import BeautifulSoup
 
@@ -23,3 +23,15 @@ jsonData = json.dumps(pokemonData)
 
 with open('./pokedexdata.json', 'w') as f:
     f.write(jsonData)
+
+i = 0
+imageData = {}
+images = Path("./[HOME] Pokémon Renders/Shiny").glob("*.png")
+for image in images:
+    print(str(image).split("/")[2])
+    # imageData[]
+
+
+# jsonImageData = json.dumps(imageData)
+# with open('./Images/shiny.json', 'w') as y:
+#     y.write(jsonImageData)
