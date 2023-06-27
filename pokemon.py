@@ -24,14 +24,24 @@ jsonData = json.dumps(pokemonData)
 with open('./pokedexdata.json', 'w') as f:
     f.write(jsonData)
 
-i = 0
 imageData = {}
 images = Path("./[HOME] Pokémon Renders/Shiny").glob("*.png")
 for image in images:
-    print(str(image).split("/")[2])
-    # imageData[]
+    pokedexNumber = (str(image).split("/")[2][13:17])
+    pokemonImage = str(image).split("/")[2]
+    imageData[pokemonImage] = pokedexNumber
 
+jsonImageData = json.dumps(imageData)
+with open('./Images/shiny.json', 'w') as y:
+    y.write(jsonImageData)
 
-# jsonImageData = json.dumps(imageData)
-# with open('./Images/shiny.json', 'w') as y:
-#     y.write(jsonImageData)
+imageDataNormal = {}
+imagesNormal = Path("./[HOME] Pokémon Renders/Normal").glob("*.png")
+for imageNormal in imagesNormal:
+    pokedexNumberNormal = (str(imageNormal).split("/")[2][13:17])
+    pokemonImageNormal = str(imageNormal).split("/")[2]
+    imageDataNormal[pokemonImageNormal] = pokedexNumberNormal
+
+jsonImageNormalData = json.dumps(imageDataNormal)
+with open('./Images/shiny.json', 'w') as y:
+    y.write(jsonImageNormalData)
