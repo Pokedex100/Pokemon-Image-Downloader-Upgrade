@@ -144,6 +144,7 @@ function isNumeric(value) {
 }
 
 function searchSuggestions(typed) {
+  itemlist.innerHTML = "";
   if (typed.length > 3) {
     for (let key in pokedexjson) {
       if (pokedexjson[key].includes(typed)) {
