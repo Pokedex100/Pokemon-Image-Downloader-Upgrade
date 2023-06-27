@@ -74,7 +74,9 @@ showPokemons();
 
 function changeImage(name) {
   container.innerHTML = "";
-  supplement.textContent = pokedexjson[name];
+  if (isNumeric(pokedexjson[name]) == false)
+    supplement.textContent = pokedexjson[name];
+  else supplement.textContent = "#" + pokedexjson[name];
   let imageName = findImage(`${pokedexjson[name]}`, imageNormaljson);
   for (let imagehref of imageName.split("#"))
     loadImage(imagehref)
