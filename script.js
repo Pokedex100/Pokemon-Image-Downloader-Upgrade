@@ -8,6 +8,7 @@ let image1a = document.getElementById("image-1a");
 let image2a = document.getElementById("image-2a");
 let container = document.getElementById("fixed-height");
 let itemlist = document.getElementById("list");
+let searchHits;
 
 let getPokedexDatabaseFromPokedb = async () => {
   // Replace ./data.json with your JSON feed
@@ -157,9 +158,27 @@ function searchSuggestions(typed) {
         pokedexjson[key].includes(typed)
       ) {
         var list = document.createElement("p");
+        list.classList.add(pokedexjson[key]);
         list.textContent = pokedexjson[key];
         itemlist.appendChild(list);
       }
     }
   }
 }
+
+itemlist.addEventListener(
+  "click",
+  (e) => {
+    e = e || Event;
+    var target = e.target || Event.target,
+      hit = target.textContent || target.innerText;
+    text.textContent = hit;
+    itemlist.innerHTML = "";
+    if (isNumeric(text.textContent.toLowerCase().trim()))
+      changeImage(
+        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
+      );
+    else changeImage(text.textContent.toLowerCase().trim());
+  },
+  false
+);

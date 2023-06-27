@@ -73,9 +73,12 @@ svg {
     text-align: center;
     justify-content: center;
     left: 50%;
+    pointer-events: none;
 }
 
 #list p {
+    cursor: pointer;
+    pointer-events: all;
     padding: 10px 60px;
     background-color: #111;
     margin: 0;
