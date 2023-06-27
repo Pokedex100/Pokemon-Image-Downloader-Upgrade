@@ -59,7 +59,12 @@ async function showPokemons() {
   await getNormalImageDatabaseFromLocal();
   await getShinyImageDatabaseFromLocal();
   text.addEventListener("input", function () {
-    changeImage(text.textContent.toLowerCase().trim());
+    if (isNumeric(text.textContent.toLowerCase().trim()))
+      changeImage(
+        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
+      );
+    else changeImage(text.textContent.toLowerCase().trim());
+
     searchSuggestions(text.textContent.toLowerCase().trim());
   });
 }
@@ -108,7 +113,7 @@ function changeImage(name) {
         attr.setAttribute("href", "./" + imagehref);
         attr.setAttribute(
           "download",
-          pokedexjson[imagehref.split("/")[2].slice(13, 17)]
+          pokedexjson[imagehref.split("/")[2].slice(13, 17)] + "-shiny"
         );
         attr.setAttribute("target", "_blank");
 
@@ -147,7 +152,10 @@ function searchSuggestions(typed) {
   itemlist.innerHTML = "";
   if (typed.length > 3) {
     for (let key in pokedexjson) {
-      if (pokedexjson[key].includes(typed)) {
+      if (
+        typed.length !== pokedexjson[key].length &&
+        pokedexjson[key].includes(typed)
+      ) {
         var list = document.createElement("p");
         list.textContent = pokedexjson[key];
         itemlist.appendChild(list);
