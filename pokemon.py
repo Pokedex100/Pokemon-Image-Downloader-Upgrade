@@ -16,8 +16,8 @@ results = soup.findAll(class_="infocard")
 for result in results:
     dexNumber = result.find("small")
     pokemonName = result.find("a", class_="ent-name")
-    pokemonData[dexNumber.text[1:]] = pokemonName.text
-    pokemonData[pokemonName.text] = dexNumber.text[1:]
+    pokemonData[dexNumber.text[1:]] = pokemonName.text.lower()
+    pokemonData[pokemonName.text.lower()] = dexNumber.text[1:]
 
 jsonData = json.dumps(pokemonData)
 
@@ -28,7 +28,7 @@ imageData = {}
 images = Path("./[HOME] Pokémon Renders/Shiny").glob("*.png")
 for image in images:
     pokedexNumber = (str(image).split("/")[2][13:17])
-    pokemonImage = str(image).split("/")[2]
+    pokemonImage = str(image)
     imageData[pokemonImage] = pokedexNumber
 
 jsonImageData = json.dumps(imageData)
@@ -39,9 +39,9 @@ imageDataNormal = {}
 imagesNormal = Path("./[HOME] Pokémon Renders/Normal").glob("*.png")
 for imageNormal in imagesNormal:
     pokedexNumberNormal = (str(imageNormal).split("/")[2][13:17])
-    pokemonImageNormal = str(imageNormal).split("/")[2]
+    pokemonImageNormal = str(imageNormal)
     imageDataNormal[pokemonImageNormal] = pokedexNumberNormal
 
 jsonImageNormalData = json.dumps(imageDataNormal)
-with open('./Images/shiny.json', 'w') as y:
-    y.write(jsonImageNormalData)
+with open('./Images/normal.json', 'w') as z:
+    z.write(jsonImageNormalData)

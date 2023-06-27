@@ -1,15 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
     padding: 0;
     border: 0;
     box-sizing: border-box;
-
+    font-family: 'Poppins', sans-serif;
 }
 
 h1,
 h2 {
     color: white;
 }
-h2{
+
+p {
+    color: rgb(159, 161, 163);
+}
+
+h2 {
     outline: 2px dashed white;
 }
 
