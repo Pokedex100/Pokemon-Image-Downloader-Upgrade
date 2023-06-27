@@ -16,8 +16,10 @@ results = soup.findAll(class_="infocard")
 for result in results:
     dexNumber = result.find("small")
     pokemonName = result.find("a", class_="ent-name")
-    pokemonData[dexNumber.text[1:]] = pokemonName.text.lower()
-    pokemonData[pokemonName.text.lower()] = dexNumber.text[1:]
+    pokemonData[dexNumber.text[1:]
+                ] = pokemonName.text.lower().replace("\u00e9", "e").replace("\u2640", "-f").replace("\u2642", "-m")
+    pokemonData[pokemonName.text.lower().replace("\u00e9", "e").replace("\u2640", "-f").replace("\u2642", "-m")
+                ] = dexNumber.text[1:]
 
 jsonData = json.dumps(pokemonData)
 

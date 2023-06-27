@@ -6,6 +6,7 @@ let image1 = document.getElementById("image-1");
 let image2 = document.getElementById("image-2");
 let image1a = document.getElementById("image-1a");
 let image2a = document.getElementById("image-2a");
+let container = document.getElementById("fixed-height");
 
 let getPokedexDatabaseFromPokedb = async () => {
   // Replace ./data.json with your JSON feed
@@ -63,21 +64,30 @@ async function showPokemons() {
 showPokemons();
 
 function changeImage(name) {
-  let imageName = findImage(`${pokedexjson[name]}`);
+  container.innerHTML = "";
+  let imageName = findImage(`${pokedexjson[name]}`, imageNormaljson);
   for (let imagehref of imageName.split("#"))
     loadImage(imagehref)
       .then((img) => {
-        image2.src = img.src;
-        image2a.href = imagehref;
+        var elem = document.createElement("img");
+        elem.setAttribute("src", imagehref);
+        elem.setAttribute("height", "256");
+        elem.setAttribute("width", "256");
+        elem.setAttribute("alt", imagehref);
+        container.appendChild(elem);
       })
       .catch((err) => console.error(err));
 
-  let imageShinyName = findImage(`${pokedexjson[name]}`);
+  let imageShinyName = findImage(`${pokedexjson[name]}`, imageShinyjson);
   for (let imagehref of imageShinyName.split("#"))
-    loadImage(imageShinyName)
+    loadImage(imagehref)
       .then((img) => {
-        image1.src = img.src;
-        image1a.href = imagehref;
+        var elem = document.createElement("img");
+        elem.setAttribute("src", imagehref);
+        elem.setAttribute("height", "256");
+        elem.setAttribute("width", "256");
+        elem.setAttribute("alt", imagehref);
+        container.appendChild(elem);
       })
       .catch((err) => console.error(err));
 }
@@ -92,24 +102,13 @@ const loadImage = (url) =>
     img.src = url;
   });
 
-function findImage(pokemon) {
+function findImage(pokemon, list) {
   let str = "";
-  if (isNumeric(pokemon) === false) {
+  if (isNumeric(pokemon) == false) {
     pokemon = pokedexjson[pokemon];
   }
-  for (let key in imageNormaljson) {
-    if (imageNormaljson[key] == pokemon) str = str + "#" + key;
-  }
-  return str.substring(1);
-}
-
-function findImageShiny(pokemon) {
-  let str = "";
-  if (isNumeric(pokemon) === false) {
-    pokemon = pokedexjson[pokemon];
-  }
-  for (let key in imageShinyjson) {
-    if (imageShinyjson[key] == pokemon) str = str + "#" + key;
+  for (let key in list) {
+    if (list[key] == pokemon) str = str + "#" + key;
   }
   return str.substring(1);
 }
