@@ -7,6 +7,7 @@ let image2 = document.getElementById("image-2");
 let image1a = document.getElementById("image-1a");
 let image2a = document.getElementById("image-2a");
 let container = document.getElementById("fixed-height");
+let itemlist = document.getElementById("list");
 
 let getPokedexDatabaseFromPokedb = async () => {
   // Replace ./data.json with your JSON feed
@@ -59,6 +60,7 @@ async function showPokemons() {
   await getShinyImageDatabaseFromLocal();
   text.addEventListener("input", function () {
     changeImage(text.textContent.toLowerCase().trim());
+    searchSuggestions(text.textContent.toLowerCase().trim());
   });
 }
 showPokemons();
@@ -70,11 +72,23 @@ function changeImage(name) {
     loadImage(imagehref)
       .then((img) => {
         var elem = document.createElement("img");
-        elem.setAttribute("src", imagehref);
+        elem.setAttribute("src", "./" + imagehref);
         elem.setAttribute("height", "256");
         elem.setAttribute("width", "256");
-        elem.setAttribute("alt", imagehref);
-        container.appendChild(elem);
+        elem.setAttribute(
+          "alt",
+          pokedexjson[imagehref.split("/")[2].slice(13, 17)]
+        );
+        var attr = document.createElement("a");
+        attr.setAttribute("href", "./" + imagehref);
+        attr.setAttribute(
+          "download",
+          pokedexjson[imagehref.split("/")[2].slice(13, 17)]
+        );
+        attr.setAttribute("target", "_blank");
+
+        attr.appendChild(elem);
+        container.appendChild(attr);
       })
       .catch((err) => console.error(err));
 
@@ -83,11 +97,23 @@ function changeImage(name) {
     loadImage(imagehref)
       .then((img) => {
         var elem = document.createElement("img");
-        elem.setAttribute("src", imagehref);
+        elem.setAttribute("src", "./" + imagehref);
         elem.setAttribute("height", "256");
         elem.setAttribute("width", "256");
-        elem.setAttribute("alt", imagehref);
-        container.appendChild(elem);
+        elem.setAttribute(
+          "alt",
+          pokedexjson[imagehref.split("/")[2].slice(13, 17)]
+        );
+        var attr = document.createElement("a");
+        attr.setAttribute("href", "./" + imagehref);
+        attr.setAttribute(
+          "download",
+          pokedexjson[imagehref.split("/")[2].slice(13, 17)]
+        );
+        attr.setAttribute("target", "_blank");
+
+        attr.appendChild(elem);
+        container.appendChild(attr);
       })
       .catch((err) => console.error(err));
 }
@@ -115,4 +141,16 @@ function findImage(pokemon, list) {
 
 function isNumeric(value) {
   return /^-?\d+$/.test(value);
+}
+
+function searchSuggestions(typed) {
+  if (typed.length > 3) {
+    for (let key in pokedexjson) {
+      if (pokedexjson[key].includes(typed)) {
+        var list = document.createElement("p");
+        list.textContent = pokedexjson[key];
+        itemlist.appendChild(list);
+      }
+    }
+  }
 }
