@@ -8,6 +8,7 @@ let image1a = document.getElementById("image-1a");
 let image2a = document.getElementById("image-2a");
 let container = document.getElementById("fixed-height");
 let itemlist = document.getElementById("list");
+let supplement = document.getElementById("supplementary");
 let searchHits;
 
 let getPokedexDatabaseFromPokedb = async () => {
@@ -73,6 +74,7 @@ showPokemons();
 
 function changeImage(name) {
   container.innerHTML = "";
+  supplement.textContent = pokedexjson[name];
   let imageName = findImage(`${pokedexjson[name]}`, imageNormaljson);
   for (let imagehref of imageName.split("#"))
     loadImage(imagehref)

@@ -86,3 +86,16 @@ svg {
     box-sizing: border-box;
     transform: translateX(-50%);
 }
+
+#inputfield {
+    position: relative;
+}
+
+
+#inputfield p#supplementary {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 6px;
+    margin-right: 16px;
+}
