@@ -11,6 +11,10 @@ body {
     position: relative;
 }
 
+.pokedex {
+    margin-block-start: 20px;
+}
+
 h1,
 h2 {
     color: white;
@@ -22,7 +26,15 @@ p {
 
 h2 {
     outline: 2px dashed white;
-    margin-bottom: 10px;
+    margin-block-end: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+#supplementary {
+    cursor: pointer;
 }
 
 html {
@@ -46,10 +58,13 @@ html {
 
 body {
     background-color: #000;
-    height: 100vh;
     box-sizing: border-box;
     align-items: center;
     text-align: center;
+    overflow-x: hidden;
+    min-block-size: 100vh;
+    inline-size: 95vw;
+    margin-inline: auto;
 }
 
 .color {
@@ -60,8 +75,8 @@ body {
 
 
 svg {
-    width: 100%;
-    height: 100%;
+    inline-size: 100%;
+    block-size: 100%;
 }
 
 #wrapper {
@@ -72,8 +87,9 @@ svg {
     position: absolute;
     text-align: center;
     justify-content: center;
-    left: 50%;
+    inset-inline-start: 50%;
     pointer-events: none;
+    transform: translateX(-50%);
 }
 
 #list p {
@@ -82,20 +98,37 @@ svg {
     padding: 10px 60px;
     background-color: #111;
     margin: 0;
-    margin-bottom: 1px;
+    margin-block-end: 1px;
     box-sizing: border-box;
-    transform: translateX(-50%);
 }
 
 #inputfield {
     position: relative;
+    inline-size: 100%;
 }
 
 
 #inputfield p#supplementary {
     position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 6px;
-    margin-right: 16px;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    margin-block-start: 6px;
+    margin-inline-end: 16px;
+}
+
+.github {
+    position: fixed;
+    overflow: hidden;
+    inset-inline-end: -30px;
+    inset-block-start: calc(100vh - 120px);
+    clip-path: circle(20%);
+    padding-inline: 20px;
+    padding-block-start: 20px;
+    padding-block-end: 14px;
+}
+
+@media screen and (orientation:portrait) {
+    .github {
+        display: none;
+    }
 }
