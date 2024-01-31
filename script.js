@@ -90,6 +90,8 @@ function changeImage(name) {
           "alt",
           pokedexjson[imagehref.split("/")[2].slice(13, 17)]
         );
+        elem.setAttribute("data-shiny", "false");
+        elem.setAttribute("data-form", imagehref.split("/")[2].slice(18, 21));
         let attr = document.createElement("a");
         attr.setAttribute("href", "./" + imagehref);
         attr.setAttribute(
@@ -115,6 +117,8 @@ function changeImage(name) {
           "alt",
           pokedexjson[imagehref.split("/")[2].slice(13, 17)]
         );
+        elem.setAttribute("data-shiny", "true");
+        elem.setAttribute("data-form", imagehref.split("/")[2].slice(18, 21));
         let attr = document.createElement("a");
         attr.setAttribute("href", "./" + imagehref);
         attr.setAttribute(
