@@ -1,6 +1,8 @@
 # Pokémon assets downloader Upgrade
 
-![Pokémon assets](./assets/favicon.png)
+<p style="text-align:center">
+<img src="./assets/favicon.png" height="80px" alt="pokmon logo"/>
+</p>
 
 ## To update the assets
 
@@ -16,3 +18,4 @@
 - Different forms of the Pokémon are categorised into the same name. For example - typing Charizard will list Charizard, X, Y, gigantamax etc forms and its shinies.
 - Clicking on the images is the simplest way to download it.
 - Search suggestions are clickable and show-up your pokémon.
+- Use query string by adding ?id=`number` and get results.
