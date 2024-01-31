@@ -1,8 +1,8 @@
 # Pokémon assets downloader Upgrade
 
-<div style="text-align:center">
+<p align="center">
 <img src="./assets/favicon.png" height="80px" alt="pokmon logo"/>
-</div>
+</p>
 
 ## To update the assets
 
