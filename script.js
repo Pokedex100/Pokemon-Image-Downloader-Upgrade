@@ -196,14 +196,14 @@ itemlist.addEventListener(
 const changePokemon = (code, content) => {
   switch (code) {
     case "ArrowUp": {
-      text.textContent = Math.max(Number(content) - 1, 1);
+      text.textContent = Number(content) + 1;
       changeImage(
         String(text.textContent.toLowerCase().trim()).padStart(4, "0")
       );
       break;
     }
     case "ArrowDown": {
-      text.textContent = Number(content) + 1;
+      text.textContent = Math.max(Number(content) - 1, 1);
       changeImage(
         String(text.textContent.toLowerCase().trim()).padStart(4, "0")
       );
