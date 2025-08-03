@@ -1,6 +1,6 @@
 {
-  "name": "Pokedex",
-  "short_name": "Pokedex",
+  "name": "Pokédex",
+  "short_name": "Pokédex",
   "description": "All the Pokemon assets in high resolution with easy-to-search options and one click download",
   "start_url": "/Pokemon-Image-Downloader-Upgrade/index.html",
   "display": "standalone",
