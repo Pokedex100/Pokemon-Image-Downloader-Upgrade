@@ -8,9 +8,25 @@
     <meta name="keywords" content="pokemon images high-quality pokedex">
     <meta name="description"
         content="All the Pokemon assets in high resolution with easy-to-search options and one click download">
-    <link rel="stylesheet" href="./style.css">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Pokedex">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-TileImage" content="./assets/logo.png">
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="./assets/logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon.png">
     <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
-    <title>Pokedex100 | Pokemon asset downloader</title>
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="./manifest.json">
+
+    <link rel="stylesheet" href="./style.css">
+    <title>Pokedex | Pokemon Asset Downloader</title>
 </head>
 
 <body>
@@ -20,8 +36,8 @@
     <p>You can search by Pokemon name or search by Pokedex number</p>
 
     <div id="inputfield">
-        <h2 contenteditable="true" id="text-name" aria-autocomplete="none" spellcheck="false" autocorrect="off"
-            autocomplete="false" role="searchbox">Darkrai</h2>
+        <input type="text" id="text-name" value="Darkrai" aria-autocomplete="none" spellcheck="false" autocorrect="off"
+            autocomplete="off" aria-label="Pokemon search">
         <p id="supplementary">#0491</p>
     </div>
     <div id="list"></div>
@@ -30,13 +46,13 @@
     <div id="fixed-height">
         <a id="image-1a" href="./[HOME] Pokémon Renders/Normal/poke_capture_0491_000_uk_n_00000000_f_n.png" download
             target="_blank">
-            <img id="image-1" src="./[HOME] Pokémon Renders/Normal/poke_capture_0491_000_uk_n_00000000_f_n.png" alt=""
-                height="256px" width="auto">
+            <img id="image-1" src="./[HOME] Pokémon Renders/Normal/poke_capture_0491_000_uk_n_00000000_f_n.png"
+                alt="pokemon image" height="256px" width="auto">
         </a>
         <a id="image-2a" href="./[HOME] Pokémon Renders/Shiny/poke_capture_0491_000_uk_n_00000000_f_r.png" download
             target="_blank">
-            <img id="image-2" src="./[HOME] Pokémon Renders/Shiny/poke_capture_0491_000_uk_n_00000000_f_r.png" alt=""
-                height="256px" width="auto">
+            <img id="image-2" src="./[HOME] Pokémon Renders/Shiny/poke_capture_0491_000_uk_n_00000000_f_r.png"
+                alt="pokemon image" height="256px" width="auto">
         </a>
     </div>
 
@@ -45,5 +61,20 @@
     </a>
 </body>
 <script src="./script.js"></script>
+
+<!-- Service Worker Registration -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+</script>
 
 </html>

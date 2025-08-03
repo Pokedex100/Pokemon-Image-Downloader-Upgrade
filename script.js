@@ -61,16 +61,25 @@ async function showPokemons() {
   await getNormalImageDatabaseFromLocal();
   await getShinyImageDatabaseFromLocal();
   text.addEventListener("input", function () {
-    if (isNumeric(text.textContent.toLowerCase().trim()))
-      changeImage(
-        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
-      );
-    else changeImage(text.textContent.toLowerCase().trim());
+    if (isNumeric(text.value.toLowerCase().trim()))
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
+    else changeImage(text.value.toLowerCase().trim());
 
-    searchSuggestions(text.textContent.toLowerCase().trim());
+    searchSuggestions(text.value.toLowerCase().trim());
   });
 }
 showPokemons();
+
+// Function to cache images in service worker
+function cacheCurrentImages(normalImages, shinyImages) {
+  if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: "CACHE_POKEMON_IMAGES",
+      normalImages: normalImages,
+      shinyImages: shinyImages,
+    });
+  }
+}
 
 function changeImage(name) {
   while (container.firstChild) container.removeChild(container.firstChild);
@@ -79,9 +88,14 @@ function changeImage(name) {
   else supplement.textContent = "#" + pokedexjson[name];
   let imageName = findImage(`${pokedexjson[name]}`, imageNormaljson);
 
+  // Collect image URLs for caching
+  let normalImageUrls = [];
+  let shinyImageUrls = [];
+
   for (let imagehref of imageName.split("#"))
     loadImage(imagehref)
       .then((img) => {
+        normalImageUrls.push("./" + imagehref);
         let elem = document.createElement("img");
         elem.setAttribute("src", "./" + imagehref);
         elem.setAttribute("height", "256");
@@ -109,6 +123,7 @@ function changeImage(name) {
   for (let imagehref of imageShinyName.split("#"))
     loadImage(imagehref)
       .then((img) => {
+        shinyImageUrls.push("./" + imagehref);
         let elem = document.createElement("img");
         elem.setAttribute("src", "./" + imagehref);
         elem.setAttribute("height", "256");
@@ -131,6 +146,13 @@ function changeImage(name) {
         container.appendChild(attr);
       })
       .catch((err) => console.error(err));
+
+  // Cache the current Pokemon images in service worker after a short delay
+  setTimeout(() => {
+    if (normalImageUrls.length > 0 || shinyImageUrls.length > 0) {
+      cacheCurrentImages(normalImageUrls, shinyImageUrls);
+    }
+  }, 1000);
 }
 
 const loadImage = (url) =>
@@ -182,13 +204,11 @@ itemlist.addEventListener(
     e = e || Event;
     let target = e.target || Event.target,
       hit = target.textContent;
-    text.textContent = hit;
+    text.value = hit;
     while (itemlist.firstChild) itemlist.removeChild(itemlist.firstChild);
-    if (isNumeric(text.textContent.toLowerCase().trim()))
-      changeImage(
-        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
-      );
-    else changeImage(text.textContent.toLowerCase().trim());
+    if (isNumeric(text.value.toLowerCase().trim()))
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
+    else changeImage(text.value.toLowerCase().trim());
   },
   false
 );
@@ -196,17 +216,13 @@ itemlist.addEventListener(
 const changePokemon = (code, content) => {
   switch (code) {
     case "ArrowUp": {
-      text.textContent = Number(content) + 1;
-      changeImage(
-        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
-      );
+      text.value = Number(content) + 1;
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
       break;
     }
     case "ArrowDown": {
-      text.textContent = Math.max(Number(content) - 1, 1);
-      changeImage(
-        String(text.textContent.toLowerCase().trim()).padStart(4, "0")
-      );
+      text.value = Math.max(Number(content) - 1, 1);
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
       break;
     }
   }
@@ -215,17 +231,17 @@ const changePokemon = (code, content) => {
 document.addEventListener("keydown", (e) => {
   if (
     (e.code !== "ArrowUp" && e.code !== "ArrowDown") ||
-    !isNumeric(text.textContent)
+    !isNumeric(text.value)
   )
     return;
   e.preventDefault();
-  changePokemon(e.code, text.textContent);
+  changePokemon(e.code, text.value);
 });
 
 supplement.addEventListener("click", () => {
   const content = supplement.textContent.replace("#", "");
   changeImage(content);
-  text.textContent = content;
+  text.value = content;
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -235,6 +251,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   setTimeout(() => {
     changeImage(String(pokemonId).padStart(4, "0"));
   }, 100);
-  text.textContent = pokemonId;
+  text.value = pokemonId;
   window.history.replaceState({}, "", `${window.location.pathname}`);
 });
