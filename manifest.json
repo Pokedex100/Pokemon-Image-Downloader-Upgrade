@@ -2,14 +2,14 @@
   "name": "Pokedex",
   "short_name": "Pokedex",
   "description": "All the Pokemon assets in high resolution with easy-to-search options and one click download",
-  "start_url": "/",
+  "start_url": "/Pokemon-Image-Downloader-Upgrade/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./assets/favicon.png",
+      "src": "./assets/logo.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "any maskable"

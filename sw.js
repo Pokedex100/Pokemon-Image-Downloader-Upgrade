@@ -8,7 +8,6 @@ const urlsToCache = [
   "/pokedexdata.json",
   "/Images/normal.json",
   "/Images/shiny.json",
-  "/assets/favicon.png",
   "/assets/logo.png",
   "/assets/github.svg",
   "/assets/pokedex.png",
