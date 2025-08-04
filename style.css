@@ -140,3 +140,11 @@ svg {
         display: none;
     }
 }
+
+@media (display-mode: standalone) {
+
+    .pokedex,
+    h1 {
+        display: none;
+    }
+}
