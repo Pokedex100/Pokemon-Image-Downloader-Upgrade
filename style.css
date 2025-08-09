@@ -151,11 +151,29 @@ label {
     block-size: 50px;
     padding: 15px;
     border-radius: 50%;
-    cursor: pointer;
+    cursor: grab;
     pointer-events: all;
+    user-select: none;
+    touch-action: none;
+    z-index: 1000;
+    transition: box-shadow 0.2s ease;
+}
+
+label:active {
+    cursor: grabbing;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+label.dragging {
+    cursor: grabbing;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    transition: none;
 }
 
 @media (display-mode: standalone) {
+    .github {
+        display: none;
+    }
 
     .pokedex,
     h1 {

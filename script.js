@@ -329,3 +329,100 @@ document.addEventListener("DOMContentLoaded", async () => {
   text.value = pokemonId;
   window.history.replaceState({}, "", `${window.location.pathname}`);
 });
+
+// Draggable search button functionality
+let isDragging = false;
+let dragOffset = { x: 0, y: 0 };
+
+const searchLabel = document.querySelector('label[for="text-name"]');
+
+// Mouse events for desktop
+searchLabel.addEventListener("mousedown", (e) => {
+  if (e.button !== 0) return; // Only left mouse button
+  isDragging = true;
+  searchLabel.classList.add("dragging");
+
+  const rect = searchLabel.getBoundingClientRect();
+  dragOffset.x = e.clientX - rect.left;
+  dragOffset.y = e.clientY - rect.top;
+
+  e.preventDefault();
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+
+  const x = e.clientX - dragOffset.x;
+  const y = e.clientY - dragOffset.y;
+
+  // Keep button within viewport bounds
+  const maxX = window.innerWidth - searchLabel.offsetWidth;
+  const maxY = window.innerHeight - searchLabel.offsetHeight;
+
+  const boundedX = Math.max(0, Math.min(x, maxX));
+  const boundedY = Math.max(0, Math.min(y, maxY));
+
+  searchLabel.style.left = boundedX + "px";
+  searchLabel.style.top = boundedY + "px";
+  searchLabel.style.right = "auto";
+  searchLabel.style.bottom = "auto";
+
+  e.preventDefault();
+});
+
+document.addEventListener("mouseup", () => {
+  if (isDragging) {
+    isDragging = false;
+    searchLabel.classList.remove("dragging");
+  }
+});
+
+// Touch events for mobile
+searchLabel.addEventListener(
+  "touchstart",
+  (e) => {
+    isDragging = true;
+    searchLabel.classList.add("dragging");
+
+    const touch = e.touches[0];
+    const rect = searchLabel.getBoundingClientRect();
+    dragOffset.x = touch.clientX - rect.left;
+    dragOffset.y = touch.clientY - rect.top;
+
+    e.preventDefault();
+  },
+  { passive: false }
+);
+
+document.addEventListener(
+  "touchmove",
+  (e) => {
+    if (!isDragging) return;
+
+    const touch = e.touches[0];
+    const x = touch.clientX - dragOffset.x;
+    const y = touch.clientY - dragOffset.y;
+
+    // Keep button within viewport bounds
+    const maxX = window.innerWidth - searchLabel.offsetWidth;
+    const maxY = window.innerHeight - searchLabel.offsetHeight;
+
+    const boundedX = Math.max(0, Math.min(x, maxX));
+    const boundedY = Math.max(0, Math.min(y, maxY));
+
+    searchLabel.style.left = boundedX + "px";
+    searchLabel.style.top = boundedY + "px";
+    searchLabel.style.right = "auto";
+    searchLabel.style.bottom = "auto";
+
+    e.preventDefault();
+  },
+  { passive: false }
+);
+
+document.addEventListener("touchend", () => {
+  if (isDragging) {
+    isDragging = false;
+    searchLabel.classList.remove("dragging");
+  }
+});
