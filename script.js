@@ -247,11 +247,6 @@ const changePokemon = (code, content) => {
 };
 
 document.addEventListener("keydown", (e) => {
-  if (!isNumeric(text.value)) {
-    supplement.click();
-    return;
-  }
-
   if (
     e.code !== "ArrowUp" &&
     e.code !== "ArrowDown" &&
@@ -259,8 +254,19 @@ document.addEventListener("keydown", (e) => {
     e.code !== "ArrowRight"
   )
     return;
+
   e.preventDefault();
-  changePokemon(e.code, text.value);
+
+  let currentNumber;
+  if (isNumeric(text.value)) {
+    currentNumber = Number(text.value);
+  } else {
+    // Find the Pokemon number from the name
+    currentNumber = Number(pokedexjson[text.value.toLowerCase().trim()]);
+    if (!currentNumber) return; // Invalid Pokemon name
+  }
+
+  changePokemon(e.code, currentNumber.toString());
 });
 
 supplement.addEventListener("click", () => {
@@ -290,17 +296,21 @@ const handleSwipe = () => {
     Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY) &&
     Math.abs(swipeDistanceX) > minSwipeDistance
   ) {
-    if (!isNumeric(text.value)) {
-      supplement.click();
-      return;
+    let currentNumber;
+    if (isNumeric(text.value)) {
+      currentNumber = Number(text.value);
+    } else {
+      // Find the Pokemon number from the name
+      currentNumber = Number(pokedexjson[text.value.toLowerCase().trim()]);
+      if (!currentNumber) return; // Invalid Pokemon name
     }
 
     if (swipeDistanceX > 0) {
       // Swipe right - go to previous Pokemon (decrease)
-      changePokemon("ArrowDown", text.value);
+      changePokemon("ArrowDown", currentNumber.toString());
     } else {
       // Swipe left - go to next Pokemon (increase)
-      changePokemon("ArrowUp", text.value);
+      changePokemon("ArrowUp", currentNumber.toString());
     }
   }
 };
