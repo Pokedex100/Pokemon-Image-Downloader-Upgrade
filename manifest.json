@@ -1,8 +1,8 @@
 {
   "name": "Pokédex",
-  "version": "2.0.1",
+  "version": "2.0.5",
   "short_name": "Pokédex",
-  "description": "All the Pokemon assets in high resolution with easy-to-search options and one click download",
+  "description": "All the Pokémon assets in high resolution with easy-to-search options and one click download",
   "start_url": "/Pokemon-Image-Downloader-Upgrade/index.html",
   "display": "standalone",
   "background_color": "#000000",

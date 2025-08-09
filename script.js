@@ -11,12 +11,11 @@ let itemlist = document.getElementById("list");
 let supplement = document.getElementById("supplementary");
 let searchHits;
 
-// Touch/swipe variables
 let touchStartX = 0;
 let touchEndX = 0;
 let touchStartY = 0;
 let touchEndY = 0;
-const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+const minSwipeDistance = 50;
 
 const getPokedexDatabaseFromPokedb = async () => {
   // Replace ./data.json with your JSON feed
@@ -234,12 +233,25 @@ const changePokemon = (code, content) => {
       changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
       break;
     }
+    case "ArrowRight": {
+      text.value = Number(content) + 1;
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
+      break;
+    }
+    case "ArrowLeft": {
+      text.value = Math.max(Number(content) - 1, 1);
+      changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
+      break;
+    }
   }
 };
 
 document.addEventListener("keydown", (e) => {
   if (
-    (e.code !== "ArrowUp" && e.code !== "ArrowDown") ||
+    (e.code !== "ArrowUp" &&
+      e.code !== "ArrowDown" &&
+      e.code !== "ArrowLeft" &&
+      e.code !== "ArrowRight") ||
     !isNumeric(text.value)
   )
     return;

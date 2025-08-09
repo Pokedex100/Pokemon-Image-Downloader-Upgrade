@@ -143,6 +143,16 @@ svg {
 
 label {
     display: none;
+    position: fixed;
+    inset-block-end: 25px;
+    inset-inline-end: 25px;
+    background-color: white;
+    inline-size: 50px;
+    block-size: 50px;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
 }
 
 @media (display-mode: standalone) {
@@ -158,15 +168,5 @@ label {
 
     label {
         display: block;
-        position: fixed;
-        inset-block-end: 25px;
-        inset-inline-end: 25px;
-        background-color: white;
-        inline-size: 80px;
-        block-size: 80px;
-        padding: 10px;
-        border-radius: 50%;
-        cursor: pointer;
-        pointer-events: all;
     }
 }
