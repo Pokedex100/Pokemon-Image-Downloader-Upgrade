@@ -224,7 +224,7 @@ itemlist.addEventListener(
 const changePokemon = (code, content) => {
   switch (code) {
     case "ArrowUp": {
-      text.value = Number(content) + 1;
+      text.value = Math.min(Number(content) + 1, 1025);
       changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
       break;
     }
@@ -234,7 +234,7 @@ const changePokemon = (code, content) => {
       break;
     }
     case "ArrowRight": {
-      text.value = Number(content) + 1;
+      text.value = Math.min(Number(content) + 1, 1025);
       changeImage(String(text.value.toLowerCase().trim()).padStart(4, "0"));
       break;
     }
@@ -247,12 +247,16 @@ const changePokemon = (code, content) => {
 };
 
 document.addEventListener("keydown", (e) => {
+  if (!isNumeric(text.value)) {
+    supplement.click();
+    return;
+  }
+
   if (
-    (e.code !== "ArrowUp" &&
-      e.code !== "ArrowDown" &&
-      e.code !== "ArrowLeft" &&
-      e.code !== "ArrowRight") ||
-    !isNumeric(text.value)
+    e.code !== "ArrowUp" &&
+    e.code !== "ArrowDown" &&
+    e.code !== "ArrowLeft" &&
+    e.code !== "ArrowRight"
   )
     return;
   e.preventDefault();
@@ -286,15 +290,17 @@ const handleSwipe = () => {
     Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY) &&
     Math.abs(swipeDistanceX) > minSwipeDistance
   ) {
-    // Only handle swipe if we have a numeric Pokemon ID
-    if (isNumeric(text.value)) {
-      if (swipeDistanceX > 0) {
-        // Swipe right - go to previous Pokemon (decrease)
-        changePokemon("ArrowDown", text.value);
-      } else {
-        // Swipe left - go to next Pokemon (increase)
-        changePokemon("ArrowUp", text.value);
-      }
+    if (!isNumeric(text.value)) {
+      supplement.click();
+      return;
+    }
+
+    if (swipeDistanceX > 0) {
+      // Swipe right - go to previous Pokemon (decrease)
+      changePokemon("ArrowDown", text.value);
+    } else {
+      // Swipe left - go to next Pokemon (increase)
+      changePokemon("ArrowUp", text.value);
     }
   }
 };
