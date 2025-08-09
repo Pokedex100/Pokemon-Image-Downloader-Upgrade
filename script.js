@@ -107,6 +107,7 @@ function changeImage(name) {
         elem.setAttribute("data-shiny", "false");
         elem.setAttribute("data-form", imagehref.split("/")[2].slice(18, 21));
         let attr = document.createElement("a");
+        attr.setAttribute("title", "Normal");
         attr.setAttribute("href", "./" + imagehref);
         attr.setAttribute(
           "download",
@@ -135,6 +136,7 @@ function changeImage(name) {
         elem.setAttribute("data-shiny", "true");
         elem.setAttribute("data-form", imagehref.split("/")[2].slice(18, 21));
         let attr = document.createElement("a");
+        attr.setAttribute("title", "Shiny");
         attr.setAttribute("href", "./" + imagehref);
         attr.setAttribute(
           "download",

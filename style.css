@@ -152,10 +152,6 @@ label {
         display: none;
     }
 
-    a:has(img) {
-        pointer-events: none;
-    }
-
     #fixed-height {
         padding-block-end: 100px;
     }
