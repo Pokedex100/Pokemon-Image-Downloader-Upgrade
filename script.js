@@ -336,9 +336,19 @@ let dragOffset = { x: 0, y: 0 };
 
 const searchLabel = document.querySelector('label[for="text-name"]');
 
+// Track click vs drag to distinguish between click and drag intentions
+let clickStartTime = 0;
+let dragThreshold = 5; // pixels
+let clickStartPosition = { x: 0, y: 0 };
+
 // Mouse events for desktop
 searchLabel.addEventListener("mousedown", (e) => {
   if (e.button !== 0) return; // Only left mouse button
+
+  clickStartTime = Date.now();
+  clickStartPosition.x = e.clientX;
+  clickStartPosition.y = e.clientY;
+
   isDragging = true;
   searchLabel.classList.add("dragging");
 
@@ -370,10 +380,23 @@ document.addEventListener("mousemove", (e) => {
   e.preventDefault();
 });
 
-document.addEventListener("mouseup", () => {
+document.addEventListener("mouseup", (e) => {
   if (isDragging) {
     isDragging = false;
     searchLabel.classList.remove("dragging");
+
+    // Check if this was a click rather than a drag
+    const clickDuration = Date.now() - clickStartTime;
+    const dragDistance = Math.sqrt(
+      Math.pow(e.clientX - clickStartPosition.x, 2) +
+        Math.pow(e.clientY - clickStartPosition.y, 2)
+    );
+
+    // If it was a short duration and minimal movement, treat as click
+    if (clickDuration < 300 && dragDistance < dragThreshold) {
+      text.focus();
+      text.select();
+    }
   }
 });
 
@@ -381,10 +404,14 @@ document.addEventListener("mouseup", () => {
 searchLabel.addEventListener(
   "touchstart",
   (e) => {
+    clickStartTime = Date.now();
+    const touch = e.touches[0];
+    clickStartPosition.x = touch.clientX;
+    clickStartPosition.y = touch.clientY;
+
     isDragging = true;
     searchLabel.classList.add("dragging");
 
-    const touch = e.touches[0];
     const rect = searchLabel.getBoundingClientRect();
     dragOffset.x = touch.clientX - rect.left;
     dragOffset.y = touch.clientY - rect.top;
@@ -420,9 +447,23 @@ document.addEventListener(
   { passive: false }
 );
 
-document.addEventListener("touchend", () => {
+document.addEventListener("touchend", (e) => {
   if (isDragging) {
     isDragging = false;
     searchLabel.classList.remove("dragging");
+
+    // Check if this was a tap rather than a drag
+    const touch = e.changedTouches[0];
+    const clickDuration = Date.now() - clickStartTime;
+    const dragDistance = Math.sqrt(
+      Math.pow(touch.clientX - clickStartPosition.x, 2) +
+        Math.pow(touch.clientY - clickStartPosition.y, 2)
+    );
+
+    // If it was a short duration and minimal movement, treat as tap
+    if (clickDuration < 300 && dragDistance < dragThreshold) {
+      text.focus();
+      text.select();
+    }
   }
 });
