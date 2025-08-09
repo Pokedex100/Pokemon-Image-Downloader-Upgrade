@@ -11,6 +11,13 @@ let itemlist = document.getElementById("list");
 let supplement = document.getElementById("supplementary");
 let searchHits;
 
+// Touch/swipe variables
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+const minSwipeDistance = 50; // Minimum distance for a swipe to be registered
+
 const getPokedexDatabaseFromPokedb = async () => {
   // Replace ./data.json with your JSON feed
   await fetch("./pokedexdata.json")
@@ -245,6 +252,44 @@ supplement.addEventListener("click", () => {
   changeImage(content);
   text.value = content;
 });
+
+// Handle swipe gestures
+const handleTouchStart = (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+};
+
+const handleTouchEnd = (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipe();
+};
+
+const handleSwipe = () => {
+  const swipeDistanceX = touchEndX - touchStartX;
+  const swipeDistanceY = touchEndY - touchStartY;
+
+  // Check if horizontal swipe is longer than vertical (to avoid conflicts with scrolling)
+  if (
+    Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY) &&
+    Math.abs(swipeDistanceX) > minSwipeDistance
+  ) {
+    // Only handle swipe if we have a numeric Pokemon ID
+    if (isNumeric(text.value)) {
+      if (swipeDistanceX > 0) {
+        // Swipe right - go to previous Pokemon (decrease)
+        changePokemon("ArrowDown", text.value);
+      } else {
+        // Swipe left - go to next Pokemon (increase)
+        changePokemon("ArrowUp", text.value);
+      }
+    }
+  }
+};
+
+// Add touch event listeners to the main container
+container.addEventListener("touchstart", handleTouchStart, { passive: true });
+container.addEventListener("touchend", handleTouchEnd, { passive: true });
 
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
