@@ -396,6 +396,8 @@ document.addEventListener("mouseup", (e) => {
     if (clickDuration < 300 && dragDistance < dragThreshold) {
       text.focus();
       text.select();
+    } else {
+      text.blur();
     }
   }
 });
@@ -464,6 +466,8 @@ document.addEventListener("touchend", (e) => {
     if (clickDuration < 300 && dragDistance < dragThreshold) {
       text.focus();
       text.select();
+    } else {
+      text.blur();
     }
   }
 });
