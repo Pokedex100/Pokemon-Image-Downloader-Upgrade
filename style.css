@@ -156,8 +156,8 @@ label {
     user-select: none;
     touch-action: none;
     z-index: 1000;
-    transition: box-shadow 0.2s ease, scale 0.2s ease;
     scale: 1;
+    transition: box-shadow 0.2s ease, scale 0.2s ease;
 }
 
 label:active {
