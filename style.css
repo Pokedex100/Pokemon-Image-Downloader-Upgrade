@@ -156,18 +156,21 @@ label {
     user-select: none;
     touch-action: none;
     z-index: 1000;
-    transition: box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease, scale 0.2s ease;
+    scale: 1;
 }
 
 label:active {
     cursor: grabbing;
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    scale: 1.1;
 }
 
 label.dragging {
     cursor: grabbing;
     box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
     transition: none;
+    scale: 1.1;
 }
 
 @media (display-mode: standalone) {
