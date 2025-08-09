@@ -141,10 +141,36 @@ svg {
     }
 }
 
+label {
+    display: none;
+}
+
 @media (display-mode: standalone) {
 
     .pokedex,
     h1 {
         display: none;
+    }
+
+    a:has(img) {
+        pointer-events: none;
+    }
+
+    #fixed-height {
+        padding-block-end: 100px;
+    }
+
+    label {
+        display: block;
+        position: fixed;
+        inset-block-end: 25px;
+        inset-inline-end: 25px;
+        background-color: white;
+        inline-size: 40px;
+        block-size: 40px;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: all;
     }
 }
